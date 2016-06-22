@@ -15,7 +15,7 @@ public class AdminController extends Controller {
         for (Admin admin : admins) {
             System.out.println(admin.get("username"));
         }
-
+        render("/pages/index.html");
     }
 
 }
