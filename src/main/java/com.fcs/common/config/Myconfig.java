@@ -1,11 +1,13 @@
-package com.fcs.admin.common.config;
+package com.fcs.common.config;
 
 import com.fcs.admin.controller.AdminController;
+import com.fcs.common.controller.IndexController;
 import com.jfinal.config.*;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.jfinal.render.ViewType;
 
 /**
  * Created by Lucare.Feng on 2016/6/22.
@@ -14,10 +16,12 @@ public class Myconfig extends JFinalConfig {
 
     public void configConstant(Constants constants) {
         constants.setDevMode(true);
+        constants.setViewType(ViewType.VELOCITY);
         PropKit.use("db.txt");
     }
 
     public void configRoute(Routes routes) {
+        routes.add("/", IndexController.class);
         routes.add("/admin", AdminController.class);
 
     }

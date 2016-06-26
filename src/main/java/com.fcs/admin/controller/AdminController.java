@@ -12,10 +12,8 @@ public class AdminController extends Controller {
 
     public void index() {
         List<Admin> admins = Admin.me.find("select * from user");
-        for (Admin admin : admins) {
-            System.out.println(admin.get("username"));
-        }
-        render("/pages/index.html");
+        setAttr("admins", admins);
+        render("/pages/admin/admin_list.html");
     }
 
 }
