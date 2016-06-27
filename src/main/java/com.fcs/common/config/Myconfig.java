@@ -2,6 +2,9 @@ package com.fcs.common.config;
 
 import com.fcs.admin.controller.AdminController;
 import com.fcs.common.controller.IndexController;
+import com.fcs.wechat.PageController;
+import com.fcs.wechat.WeixinApiController;
+import com.fcs.wechat.WeixinMsgController;
 import com.jfinal.config.*;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -14,15 +17,31 @@ import com.jfinal.render.ViewType;
  */
 public class Myconfig extends JFinalConfig {
 
+    /**
+     * 如果生产环境配置文件存在，则优先加载该配置，否则加载开发环境配置文件
+     * @param pro 生产环境配置文件
+     * @param dev 开发环境配置文件
+     */
+    public void loadProp(String pro, String dev) {
+        try {
+            PropKit.use(pro);
+        }catch (Exception e) {
+            PropKit.use(dev);
+        }
+    }
+
     public void configConstant(Constants constants) {
+        loadProp("config_pro.txt", "config.txt");
         constants.setDevMode(true);
         constants.setViewType(ViewType.VELOCITY);
-        PropKit.use("db.txt");
     }
 
     public void configRoute(Routes routes) {
         routes.add("/", IndexController.class);
         routes.add("/admin", AdminController.class);
+        routes.add("/msg", WeixinMsgController.class);
+        routes.add("/api", WeixinApiController.class);
+        routes.add("/page", PageController.class);
 
     }
 
